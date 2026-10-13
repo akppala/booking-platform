@@ -1,0 +1,83 @@
+-- CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- CREATE TABLE provider (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     code VARCHAR(100) NOT NULL UNIQUE,
+--     name VARCHAR(255) NOT NULL,
+--     description TEXT,
+--     status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0
+-- );
+
+-- CREATE TABLE provider_offering (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     provider_id UUID NOT NULL REFERENCES provider(id),
+--     catalog_id UUID NOT NULL,
+--     code VARCHAR(100) NOT NULL, name VARCHAR(255) NOT NULL, description TEXT,
+--     status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0,
+--     UNIQUE (provider_id, catalog_id), UNIQUE (provider_id, code)
+-- );
+
+-- CREATE TABLE offering_availability_type (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     provider_offering_id UUID NOT NULL REFERENCES provider_offering(id),
+--     parent_type_id UUID REFERENCES offering_availability_type(id),
+--     code VARCHAR(100) NOT NULL, name VARCHAR(255) NOT NULL, level INTEGER, bookable BOOLEAN NOT NULL DEFAULT false,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0,
+--     UNIQUE (provider_offering_id, code)
+-- );
+
+-- CREATE TABLE offering_availability (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     provider_offering_id UUID NOT NULL REFERENCES provider_offering(id),
+--     availability_type_id UUID NOT NULL REFERENCES offering_availability_type(id),
+--     parent_availability_id UUID REFERENCES offering_availability(id), geo_location_id UUID,
+--     code VARCHAR(100) NOT NULL, name VARCHAR(255) NOT NULL, description TEXT, status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0,
+--     UNIQUE (provider_offering_id, code)
+-- );
+
+-- CREATE TABLE schedule (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     provider_offering_id UUID NOT NULL REFERENCES provider_offering(id),
+--     offering_availability_id UUID NOT NULL REFERENCES offering_availability(id),
+--     schedule_code VARCHAR(100) NOT NULL, name VARCHAR(255) NOT NULL, description TEXT,
+--     start_time TIMESTAMP NOT NULL, end_time TIMESTAMP NOT NULL, capacity INTEGER NOT NULL CHECK (capacity > 0),
+--     available_capacity INTEGER NOT NULL CHECK (available_capacity >= 0 AND available_capacity <= capacity), status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0,
+--     CHECK (end_time > start_time), UNIQUE (provider_offering_id, schedule_code)
+-- );
+
+-- CREATE TABLE inventory (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     schedule_id UUID NOT NULL REFERENCES schedule(id), parent_inventory_id UUID REFERENCES inventory(id),
+--     inventory_code VARCHAR(100) NOT NULL, display_name VARCHAR(255) NOT NULL, inventory_type VARCHAR(30) NOT NULL,
+--     capacity INTEGER NOT NULL CHECK (capacity > 0), booked INTEGER NOT NULL DEFAULT 0 CHECK (booked >= 0 AND booked <= capacity), status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0,
+--     UNIQUE (schedule_id, inventory_code)
+-- );
+
+-- CREATE TABLE inventory_hold (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(), inventory_id UUID NOT NULL REFERENCES inventory(id),
+--     booking_reference VARCHAR(255) NOT NULL, expires_at TIMESTAMP NOT NULL, status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0
+-- );
+-- CREATE INDEX inventory_hold_active_expiry_idx ON inventory_hold (status, expires_at);
+
+-- CREATE TABLE pricing (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(), schedule_id UUID NOT NULL REFERENCES schedule(id), inventory_id UUID NOT NULL REFERENCES inventory(id),
+--     currency VARCHAR(3) NOT NULL, base_price NUMERIC(12,2) NOT NULL, tax NUMERIC(12,2) NOT NULL DEFAULT 0,
+--     discount NUMERIC(12,2) NOT NULL DEFAULT 0, final_price NUMERIC(12,2) NOT NULL, status VARCHAR(30) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     created_by VARCHAR(255), updated_by VARCHAR(255), version BIGINT NOT NULL DEFAULT 0,
+--     UNIQUE (schedule_id, inventory_id)
+-- );

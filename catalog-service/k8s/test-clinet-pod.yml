@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-client
+  namespace: booking-platform
+  annotations:
+    sidecar.istio.io/inject: "false"
+spec:
+  containers:
+  - name: curl
+    image: curlimages/curl
+    command:
+    - sleep
+    - "3600"

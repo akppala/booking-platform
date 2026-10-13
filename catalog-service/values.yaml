@@ -1,0 +1,25 @@
+deployment:
+  kong:
+    enabled: true
+
+proxy:
+  enabled: true
+  type: LoadBalancer
+
+admin:
+  enabled: true
+  type: LoadBalancer
+  http:
+    enabled: true
+
+manager:
+  enabled: true
+  type: LoadBalancer
+  http:
+    enabled: true
+
+ingressController:
+  enabled: true
+
+env:
+  database: "off"

@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../../react"
+		},
+		{
+			"path": "../../../../ds"
+		},
+		{
+			"path": "../../../bt/bluetooth"
+		},
+		{
+			"path": "../../../../ai/ai-agent"
+		},
+		{
+			"path": "../../../../react-proj/akp-app"
+		},
+		{
+			"path": "../../../ledger"
+		},
+		{
+			"name": "fx",
+			"path": "../../../fx"
+		},
+		{
+			"path": "../../../../../tf"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}

@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: catalog-service
+  namespace: observability
+spec:
+  selector:
+    matchLabels:
+      app: catalog-service
+
+  namespaceSelector:
+    matchNames:
+      - akp-ns
+
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s

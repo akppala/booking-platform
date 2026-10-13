@@ -1,0 +1,2 @@
+rootProject.name='enterprise-booking-platform'
+include 'common','api-gateway','auth-service','user-service','catalog-service','inventory-service','booking-service','payment-service','notification-service'

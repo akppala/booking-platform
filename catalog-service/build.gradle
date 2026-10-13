@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.booking.catalog'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation "io.micrometer:micrometer-registry-prometheus"
+    implementation "io.micrometer:micrometer-tracing-bridge-otel"
+    implementation "io.opentelemetry:opentelemetry-exporter-otlp"
+    runtimeOnly("org.postgresql:r2dbc-postgresql")
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    implementation 'com.mastercard.developer:oauth1-signer:1.6.0'
+    annotationProcessor "org.projectlombok:lombok"
+    compileOnly "org.projectlombok:lombok"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testImplementation 'io.projectreactor:reactor-test'
+}
+
+jar {
+    enabled = false
+}
+
+bootJar {
+    archiveFileName = "catalog-service.jar"
+}

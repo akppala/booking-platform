@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: catalog-network-policy
+  namespace: booking-platform
+spec:
+  podSelector:
+    matchLabels:
+      app: catalog-service
+
+  policyTypes:
+    - Ingress
+
+  ingress:
+
+    # Allow traffic from Kong Gateway pods
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kong
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: kong
+
+    # Allow traffic from microservices in the booking-platform namespace
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: booking-platform

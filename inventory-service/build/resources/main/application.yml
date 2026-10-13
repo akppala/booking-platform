@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: inventory-service
+  # security:
+  #   oauth2:
+  #     resourceserver:
+  #       jwt:
+  #         issuer-uri: https://dev-g48mdxih18rldnql.us.auth0.com/
+  #     client:
+  #       registration:
+  #         auth0:
+  #           client-id: 5OdW0OSOcSOWIdcUwSfAeaINQMaWhrcP
+  #           client-secret: PGaw3KRi1HqYudkl76o_OhFoW86KsxlEsKnxPLydWAmjMCwjir8NHe6-iNpUsL-Z
+  #           scope:
+  #             - openid
+  #             - profile
+  #             - email
+  #           additional-parameters:
+  #             audience: user-api
+
+  #       provider:
+  #         auth0:
+  #           issuer-uri: https://dev-g48mdxih18rldnql.us.auth0.com/
+  #           additional-parameters:
+  #             audience: user-api
+
+  r2dbc:
+    url: r2dbc:postgresql://host.k3d.internal:5432/booking_platform
+    username: postgres
+    password: postgres
+    pool:
+      initial-size: 5
+      max-size: 20
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    url: jdbc:postgresql://host.k3d.internal:5432/booking_platform
+    user: postgres
+    password: postgres
+    baseline-on-migrate: true
+
+server:
+  port: 8011
+
+logging:
+  level:
+    org.flywaydb: TRACE
+    org.springframework.r2dbc: DEBUG
+    org.springframework.security: TRACE

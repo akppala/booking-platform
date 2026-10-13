@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-kong-to-argocd
+  namespace: argocd
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: kong # <-- Change to your Kong Gateway namespace if different
+  to:
+    - group: ""
+      kind: Service
+      name: argocd-server
+

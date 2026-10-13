@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: catalog-internal
+  namespace: booking-platform
+spec:
+  selector:
+    matchLabels:
+      app: catalog-service
+
+  rules:
+    - from:
+        - source:
+            principals:
+              - cluster.local/ns/booking-platform/sa/booking-sa
+              - cluster.local/ns/booking-platform/sa/inventory-sa

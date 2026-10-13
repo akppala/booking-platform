@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: booking-sa
+  namespace: booking-platform
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: catalog-sa
+  namespace: booking-platform
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: inventory-sa
+  namespace: booking-platform
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payment-sa
+  namespace: booking-platform
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-sa
+  namespace: booking-platform

@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: catalog
+  namespace: booking-platform
+spec:
+  hosts:
+    - catalog-service
+
+  http:
+    - timeout: 5s
+
+      retries:
+        attempts: 3
+        perTryTimeout: 2s
+        retryOn: connect-failure,refused-stream,unavailable,cancelled,5xx
+      # fault:
+      #   abort:
+      #     percentage:
+      #       value: 20
+      #     httpStatus: 503
+      #   delay:
+      #     percentage:
+      #       value: 50
+      #     fixedDelay: 5s
+      # mirror:
+      #   host: catalog-service
+      #   subset: v2
+
+      # mirrorPercentage:
+      #   value: 100
+
+      route:
+        - destination:
+            host: catalog-service
+            subset: v1
+            port:
+              number: 8010
+          weight: 90
+
+        - destination:
+            host: catalog-service
+            subset: v2
+            port:
+              number: 8010
+          weight: 10
