@@ -41,12 +41,5 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
-
-      - name: Generate Gradle Wrapper
-        run: gradle wrapper --gradle-version 8.14.3
-
       - name: Build Catalog Service
-        working-directory: catalog-service
-        run: ./gradlew clean build
+        run: ./gradlew :catalog-service:clean build
