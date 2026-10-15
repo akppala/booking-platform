@@ -2,3 +2,6 @@
 .gradle
 .vscode/settings.json
 build
+./api-gateway/build
+./auth-service/build
+./payment-service/build
