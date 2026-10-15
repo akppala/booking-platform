@@ -71,7 +71,7 @@ spec:
             path: /actuator/health
             port: 8010
           initialDelaySeconds: 20
-          periodSeconds: 5
+          periodSeconds: 10
         resources:
           requests:
             memory: "1Gi"
