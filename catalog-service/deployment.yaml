@@ -21,8 +21,8 @@ spec:
       #serviceAccountName: catalog-sa
       containers:
       - name: catalog-service
-        image: catalog-service:latest
-        imagePullPolicy: IfNotPresent
+        image: akpplaa/catalog-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8010
           name: http
