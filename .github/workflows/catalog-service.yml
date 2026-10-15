@@ -51,6 +51,7 @@ jobs:
           context: ./catalog-service
           file: ./catalog-service/Dockerfile
           push: true
+          platforms: linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/catalog-service:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/catalog-service:${{ github.sha }}
