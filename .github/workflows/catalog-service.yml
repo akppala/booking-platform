@@ -35,8 +35,7 @@ jobs:
       - name: Build and test Catalog Service
         run: ./gradlew :catalog-service:clean :catalog-service:build
       - name: Run Catalog Service tests
-        run:  ls -al
-
+        run: cd catalog-service && ls -al
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -49,7 +48,7 @@ jobs:
       - name: Build and publish Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./catalog-service
           file: ./catalog-service/Dockerfile
           push: true
           tags: |
