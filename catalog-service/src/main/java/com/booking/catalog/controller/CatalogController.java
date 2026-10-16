@@ -58,7 +58,7 @@ public class CatalogController {
     @GetMapping("/{id}")
     public Mono<Catalog> getById(
             @PathVariable UUID id) {
-
+        log.info("Catalog Service getById endpoint called with id: {}", id);
         return catalogService.findById(id);
     }
 
