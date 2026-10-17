@@ -10,8 +10,6 @@ spec:
   selector:
     matchLabels:
       app: catalog-service
-  imagePullSecrets:
-    - name: dockerhub-secret
   template:
     metadata:
       labels:
@@ -21,6 +19,8 @@ spec:
         instrumentation.opentelemetry.io/inject-java: "true"
     spec:
       #serviceAccountName: catalog-sa
+      imagePullSecrets:
+      - name: dockerhub-secret
       containers:
       - name: catalog-service
         image: akppala/catalog-service:latest
