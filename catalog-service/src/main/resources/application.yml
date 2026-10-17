@@ -57,30 +57,30 @@ logging:
     org.flywaydb: TRACE
     org.springframework.r2dbc: DEBUG
     org.springframework.security: TRACE
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus,metrics
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: health,info,prometheus,metrics
 
-  endpoint:
-    health:
-      show-details: always
+#   endpoint:
+#     health:
+#       show-details: always
 
-  metrics:
-    tags:
-      application: catalog-service
+#   metrics:
+#     tags:
+#       application: catalog-service
 
-  prometheus:
-    metrics:
-      export:
-        enabled: true
-  tracing:
-    enabled: true
+#   prometheus:
+#     metrics:
+#       export:
+#         enabled: true
+#   tracing:
+#     enabled: true
 
-    sampling:
-      probability: 1.0
+#     sampling:
+#       probability: 1.0
 
-  otlp:
-    tracing:
-      endpoint: http://tempo.observability.svc.cluster.local:4318/v1/traces
+#   otlp:
+#     tracing:
+#       endpoint: http://tempo.observability.svc.cluster.local:4318/v1/traces
