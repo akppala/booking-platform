@@ -10,6 +10,8 @@ spec:
   selector:
     matchLabels:
       app: catalog-service
+  imagePullSecrets:
+    - name: dockerhub-secret
   template:
     metadata:
       labels:
